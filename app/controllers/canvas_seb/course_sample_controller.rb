@@ -13,7 +13,8 @@ module CanvasSeb
       if authorized_action(@context, @current_user, :view_canvas_seb_sample_page)
         @username = @current_user.name
         @coursename = @context.name
-        @course_key = @context.settings[:canvas_seb_quiz_key]
+        @mac_key = @context.settings[:seb_config_key_mac] || @context.settings[:canvas_seb_quiz_key]
+        @win_key = @context.settings[:seb_config_key_window]
       end
     end
 
@@ -21,9 +22,10 @@ module CanvasSeb
       if authorized_action(@context, @current_user, :manage_canvas_seb_course_settings)
         # Create a deep mutable copy of settings to avoid frozen hash errors
         current_settings = (@context.settings || {}).deep_dup
-        current_settings[:canvas_seb_quiz_key] = params[:course_quiz_key]
+        current_settings[:seb_config_key_mac] = params[:seb_config_key_mac]
+        current_settings[:seb_config_key_window] = params[:seb_config_key_window]
         
-        Rails.logger.info "[Canvas SEB] Saving course key: #{params[:course_quiz_key]} for course #{@context.id}"
+        Rails.logger.info "[Canvas SEB] Saving course keys - MAC: #{params[:seb_config_key_mac]}, Windows: #{params[:seb_config_key_window]} for course #{@context.id}"
         
         # Use update_attribute to bypass validations and ensure save
         if @context.update_attribute(:settings, current_settings)

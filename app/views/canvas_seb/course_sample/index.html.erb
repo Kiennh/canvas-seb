@@ -9,13 +9,21 @@
   <h3><%= t(:course_settings_title, "Course Specific Settings") %></h3>
   <%= form_with url: course_canvas_seb_save_settings_path(id: @context.id), method: :post, local: true do |f| %>
     <div style="margin-bottom: 15px;">
-      <label for="course_quiz_key" style="display: block; margin-bottom: 5px;">
-        <%= t(:course_quiz_key_label, "SEB Config key:") %>
+      <label for="seb_config_key_mac" style="display: block; margin-bottom: 5px;">
+        <%= t(:seb_config_key_mac_label, "SEB Config key (MAC):") %>
       </label>
-      <input type="text" name="course_quiz_key" id="course_quiz_key" value="<%= @course_key %>" style="width: 300px;" placeholder="e.g. SECURE-KEY-123" />
+      <input type="text" name="seb_config_key_mac" id="seb_config_key_mac" value="<%= @mac_key %>" style="width: 400px;" placeholder="e.g. SECURE-KEY-MAC" />
     </div>
+
+    <div style="margin-bottom: 15px;">
+      <label for="seb_config_key_window" style="display: block; margin-bottom: 5px;">
+        <%= t(:seb_config_key_window_label, "SEB Config key (Windows):") %>
+      </label>
+      <input type="text" name="seb_config_key_window" id="seb_config_key_window" value="<%= @win_key %>" style="width: 400px;" placeholder="e.g. SECURE-KEY-WINDOW" />
+    </div>
+
     <button type="submit" class="btn btn-primary">
-      <%= t(:save_key_button, "Save SEB Config key") %>
+      <%= t(:save_keys_button, "Save SEB Config keys") %>
     </button>
   <% end %>
 </div>

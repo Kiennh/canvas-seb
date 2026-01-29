@@ -18,25 +18,28 @@ module CanvasSeb
       # Check if "Disable Quiz SEB" (Enforce SEB) is enabled in settings
       if Canvas::Plugin.value_to_boolean(settings[:disable_quiz_seb]) && !preview
         # Check SEB Config Key if configured for the course
-        course_seb_key = self.context.settings[:canvas_seb_quiz_key]
+        mac_key = self.context.settings[:seb_config_key_mac] || self.context.settings[:canvas_seb_quiz_key]
+        win_key = self.context.settings[:seb_config_key_window]
 
-        if course_seb_key.present?
+        if mac_key.present? || win_key.present?
           headers = req_info[:headers] || {}
           client_seb_hash = headers['HTTP_X_SAFEEXAMBROWSER_CONFIGKEYHASH']
           current_url = req_info[:current_url].to_s
 
           require 'digest'
-          expected_hash = Digest::SHA256.hexdigest(current_url + course_seb_key)
+          valid_hashes = []
+          valid_hashes << Digest::SHA256.hexdigest(current_url + mac_key) if mac_key.present?
+          valid_hashes << Digest::SHA256.hexdigest(current_url + win_key) if win_key.present?
 
-          if client_seb_hash != expected_hash
-            Rails.logger.info "[Canvas SEB] SEB Config Key mismatch. Expected Hash: #{expected_hash}, Received Hash: #{client_seb_hash} (Based on URL: #{current_url} and Course Key: #{course_seb_key}) for user #{user.id}"
-            
-            # For debugging purposes, we might want to show the expected hash or parts of it
+          if !client_seb_hash.to_s.empty? && valid_hashes.include?(client_seb_hash)
+            # Match
+          else
+            Rails.logger.info "[Canvas SEB] SEB Config Key mismatch. Valid Hashes: #{valid_hashes.join(', ')}, Received Hash: #{client_seb_hash} (URL: #{current_url}) for user #{user.id}"
             raise "This quiz requires Safe Exam Browser with the correct configuration. (Mismatch detected)"
           end
         else
-          # Fallback: Validation enabled but no key set -> Block all
-          Rails.logger.info "[Canvas SEB] Preventing quiz start (No SEB key configured) for user #{user.id} in course '#{course_name}'"
+          # Fallback: Validation enabled but no keys set -> Block all
+          Rails.logger.info "[Canvas SEB] Preventing quiz start (No SEB keys configured) for user #{user.id} in course '#{course_name}'"
           raise "Quizzes are currently disabled by the Canvas SEB plugin for course '#{course_name}'."
         end
       end
