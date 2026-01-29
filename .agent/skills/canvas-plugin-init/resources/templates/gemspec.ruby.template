@@ -1,0 +1,17 @@
+# frozen_string_literal: true
+
+require_relative "lib/PLUGIN_NAME_SNAKE/version"
+
+Gem::Specification.new do |spec|
+  spec.name          = "PLUGIN_NAME_SNAKE"
+  spec.version       = PLUGIN_NAME_CAMEL::VERSION
+  spec.authors       = ["Instructure"]
+  spec.email         = ["info@instructure.com"]
+  spec.summary       = "Summary of PLUGIN_NAME_HUMAN"
+  spec.description   = "Detailed description of PLUGIN_NAME_HUMAN"
+  spec.homepage      = "http://www.instructure.com"
+
+  spec.files         = Dir["{app,lib,config}/**/*"]
+
+  spec.add_dependency "rails", ">= 3.2"
+end

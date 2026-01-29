@@ -1,0 +1,30 @@
+# frozen_string_literal: true
+
+module PLUGIN_NAME_CAMEL
+  module QuizExtension
+    # Hook into Canvas Quiz generation
+    # This is called whenever a student (or preview user) starts a quiz
+    def generate_submission(user, preview = false)
+      # Access captured request info from Thread.current (set in QuizzesControllerExtension)
+      req_info = Thread.current[:PLUGIN_NAME_SNAKE_request_info] || {}
+      user_agent = req_info[:user_agent] || "Unknown UA"
+      remote_ip = req_info[:remote_ip] || "Unknown IP"
+
+      # Get plugin settings and course info
+      settings = Canvas::Plugin.find(:PLUGIN_NAME_SNAKE).settings || {}
+      course_name = self.context.respond_to?(:name) ? self.context.name : "Unknown Course"
+      
+      # Check if "Disable Quiz Start" is enabled in settings
+      if Canvas::Plugin.value_to_boolean(settings[:disable_quiz_start]) && !preview
+        Rails.logger.warn "[PLUGIN_NAME_CAMEL] Preventing quiz start for user #{user.id} in course '#{course_name}' (IP: #{remote_ip}, UA: #{user_agent})"
+        raise "Quizzes are currently disabled by the PLUGIN_NAME_HUMAN plugin for course '#{course_name}'. (Your IP: #{remote_ip}, User-Agent: #{user_agent})"
+      end
+
+      # Custom logic: Log the start of a quiz
+      Rails.logger.info "[PLUGIN_NAME_CAMEL] Hook triggered: User #{user.is_a?(User) ? user.name : user} is starting quiz '#{self.title}' (ID: #{self.id})"
+      Rails.logger.info "[PLUGIN_NAME_CAMEL] Request Details: IP=#{remote_ip}, UA=#{user_agent}"
+      
+      super # CRITICAL: Call super to maintain standard Canvas behavior
+    end
+  end
+end

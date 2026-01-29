@@ -1,0 +1,27 @@
+# frozen_string_literal: true
+
+module PLUGIN_NAME_CAMEL
+  module QuizzesControllerExtension
+    def self.prepended(base)
+      base.before_action :check_PLUGIN_NAME_SNAKE_quiz_disabled, only: [:show, :start_quiz!]
+      base.before_action :capture_PLUGIN_NAME_SNAKE_request_info, only: [:show, :start_quiz!]
+    end
+
+    def capture_PLUGIN_NAME_SNAKE_request_info
+      # Store the user agent or specific headers in a thread-local variable
+      Thread.current[:PLUGIN_NAME_SNAKE_request_info] = {
+        user_agent: request.user_agent,
+        remote_ip: request.remote_ip,
+        headers: request.headers.to_h.select { |k, _| k.start_with?('HTTP_') || k == 'CONTENT_TYPE' }
+      }
+    end
+
+    def check_PLUGIN_NAME_SNAKE_quiz_disabled
+      settings = Canvas::Plugin.find(:PLUGIN_NAME_SNAKE).settings || {}
+      if Canvas::Plugin.value_to_boolean(settings[:disable_quiz_start]) && @quiz.present? && !can_preview?
+        # Redirect to the custom error page with course context
+        redirect_to PLUGIN_NAME_SNAKE_quiz_disabled_path(course_id: @context.id)
+      end
+    end
+  end
+end

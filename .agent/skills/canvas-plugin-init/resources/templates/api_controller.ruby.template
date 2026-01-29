@@ -1,0 +1,29 @@
+module PLUGIN_NAME_CAMEL
+  module Api
+    module V1
+      class PLUGIN_NAME_CAMELController < ApplicationController
+        before_action :require_user
+
+        # GET /api/v1/PLUGIN_NAME_SNAKE
+        def index
+          render json: { 
+            status: 'success', 
+            message: "Hello from PLUGIN_NAME_HUMAN API, #{@current_user.name}!",
+            plugin_id: 'PLUGIN_NAME_SNAKE'
+          }
+        end
+
+        # POST /api/v1/PLUGIN_NAME_SNAKE/trigger_worker
+        def trigger_worker
+          worker_id = SecureRandom.uuid
+          PLUGIN_NAME_CAMEL::Worker.enqueue(worker_id)
+          render json: { 
+            status: 'success', 
+            message: 'Worker job enqueued', 
+            job_id: worker_id 
+          }
+        end
+      end
+    end
+  end
+end

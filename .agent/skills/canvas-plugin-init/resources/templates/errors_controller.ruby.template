@@ -1,0 +1,19 @@
+# frozen_string_literal: true
+
+module PLUGIN_NAME_CAMEL
+  class ErrorsController < ApplicationController
+    before_action :require_user
+    before_action :require_context
+
+    def quiz_disabled
+      @remote_ip = request.remote_ip
+      @user_agent = request.user_agent
+      @course_name = @context.respond_to?(:name) ? @context.name : "Unknown Course"
+      @course_key = @context.respond_to?(:settings) ? @context.settings[:PLUGIN_NAME_SNAKE_quiz_key].presence : nil
+      key_text = @course_key ? " (Course Key: #{@course_key})" : ""
+      @message = t(:quiz_disabled_message, "Quizzes are currently disabled by the PLUGIN_NAME_HUMAN plugin for course '%{course}'.%{key_text} (Your IP: %{ip}, User-Agent: %{ua})", 
+                   course: @course_name, key_text: key_text, ip: @remote_ip, ua: @user_agent)
+      render layout: 'application'
+    end
+  end
+end

@@ -1,0 +1,30 @@
+<div id="quiz_disabled_error" style="width: 600px; margin: 40px auto; text-align: center;">
+  <div class="ui-state-error ui-corner-all" style="padding: 2em; border-width: 2px;">
+    <i class="icon-warning" style="font-size: 3em; display: block; margin-bottom: 0.5em;"></i>
+    <h2 style="color: #b94a48; margin-top: 0;"><%= t(:access_denied, "Access Denied") %></h2>
+    <p style="font-size: 1.2em; line-height: 1.5; color: #0088cc;">
+      <%= @message %>
+    </p>
+    <div style="margin-top: 2em;">
+      <a href="/" class="btn btn-primary">
+        <i class="icon-home"></i> <%= t(:go_back_home, "Go Back Home") %>
+      </a>
+    </div>
+  </div>
+</div>
+
+<style>
+  #quiz_disabled_error .ui-state-error {
+    background-color: #f2dede;
+    border-color: #eed3d7;
+    color: #b94a48;
+  }
+  #quiz_disabled_error .btn-primary {
+    background-color: #0088cc;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 4px;
+    display: inline-block;
+  }
+</style>

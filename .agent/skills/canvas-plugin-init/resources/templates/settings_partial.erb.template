@@ -1,0 +1,28 @@
+<div class="plugin_settings_hello">
+  <h3><%= t(:hello_user, "Hello, %{user}!", user: @current_user.name) %></h3>
+  <p><%= t(:welcome_message, "Welcome to the PLUGIN_NAME_HUMAN configuration page.") %></p>
+</div>
+
+<%= fields_for :settings do |f| %>
+<table class="formtable">
+  <tr>
+    <td style="vertical-align: top;"><%= blabel :PLUGIN_NAME_SNAKE, :enabled, :en => "Enable Plugin" %></td>
+    <td>
+      <%= f.check_box :enabled, :checked => Canvas::Plugin.value_to_boolean(settings[:enabled]) %>
+    </td>
+  </tr>
+  <tr>
+    <td><%= blabel :PLUGIN_NAME_SNAKE, :api_key, :en => "Plugin API Key" %></td>
+    <td>
+      <%= f.text_field :api_key, :value => settings[:api_key] %>
+    </td>
+  </tr>
+  <tr>
+    <td><%= blabel :PLUGIN_NAME_SNAKE, :disable_quiz_start, :en => "Disable Quiz Start (Hook Demo)" %></td>
+    <td>
+      <%= f.check_box :disable_quiz_start, :checked => Canvas::Plugin.value_to_boolean(settings[:disable_quiz_start]) %>
+      <small><%= t(:disable_hint, "If checked, the system hook will prevent students from starting any quiz.") %></small>
+    </td>
+  </tr>
+</table>
+<% end %>

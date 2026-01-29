@@ -1,0 +1,21 @@
+module PLUGIN_NAME_CAMEL
+  class Worker
+    attr_accessor :job_id
+
+    def initialize(job_id)
+      @job_id = job_id
+    end
+
+    def perform
+      # Background logic here
+      Rails.logger.info "[PLUGIN_NAME_CAMEL Worker] Processing job #{@job_id}"
+      # Simulate work
+      sleep 2
+      Rails.logger.info "[PLUGIN_NAME_CAMEL Worker] Completed job #{@job_id}"
+    end
+
+    def self.enqueue(id)
+      Delayed::Job.enqueue(new(id), priority: Delayed::LOW_PRIORITY)
+    end
+  end
+end

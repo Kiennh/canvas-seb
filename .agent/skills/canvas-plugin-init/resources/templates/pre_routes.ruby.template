@@ -1,0 +1,16 @@
+CanvasRails::Application.routes.draw do
+  # Plugin API Routes
+  namespace :api do
+    namespace :v1 do
+      get 'PLUGIN_NAME_SNAKE' => 'PLUGIN_NAME_SNAKE/api/v1/PLUGIN_NAME_SNAKE#index'
+      post 'PLUGIN_NAME_SNAKE/trigger_worker' => 'PLUGIN_NAME_SNAKE/api/v1/PLUGIN_NAME_SNAKE#trigger_worker'
+    end
+  end
+
+  # Course Navigation Page Route
+  get 'courses/:id/PLUGIN_NAME_SNAKE_sample' => 'PLUGIN_NAME_SNAKE/course_sample#index', as: :course_PLUGIN_NAME_SNAKE_sample
+  post 'courses/:id/PLUGIN_NAME_SNAKE_save_settings' => 'PLUGIN_NAME_SNAKE/course_sample#save_settings', as: :course_PLUGIN_NAME_SNAKE_save_settings
+
+  # Error Pages
+  get 'PLUGIN_NAME_SNAKE/quiz_disabled' => 'PLUGIN_NAME_SNAKE/errors#quiz_disabled', as: :PLUGIN_NAME_SNAKE_quiz_disabled
+end

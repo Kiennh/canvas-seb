@@ -1,0 +1,62 @@
+# frozen_string_literal: true
+
+module PLUGIN_NAME_CAMEL
+  class Engine < ::Rails::Engine
+    config.paths["lib"].eager_load!
+
+    config.to_prepare do
+      # Register the plugin with Canvas
+      Canvas::Plugin.register :PLUGIN_NAME_SNAKE, nil, {
+        name: -> { I18n.t(:PLUGIN_NAME_SNAKE_name, "PLUGIN_NAME_HUMAN") },
+        author: "Instructure",
+        description: "Initializes PLUGIN_NAME_HUMAN with GUI, API, Worker, and Course Navigation",
+        version: "1.0.0",
+        settings_partial: "plugins/PLUGIN_NAME_SNAKE_settings",
+        settings: {
+          enabled: true,
+          worker: "PLUGIN_NAME_CAMEL::Worker",
+          disable_quiz_start: false
+        }
+      }
+
+      # Register granular permissions
+      Permissions.register({
+        view_PLUGIN_NAME_SNAKE_sample_page: {
+          label: -> { I18n.t("Permissions - View PLUGIN_NAME_HUMAN Sample Page") },
+          available_to: %w[StudentEnrollment TeacherEnrollment TaEnrollment DesignerEnrollment AccountMembership],
+          true_for: %w[TeacherEnrollment TaEnrollment AccountAdmin],
+        },
+        manage_PLUGIN_NAME_SNAKE_course_settings: {
+          label: -> { I18n.t("Permissions - Manage PLUGIN_NAME_HUMAN Course Settings") },
+          available_to: %w[TeacherEnrollment TaEnrollment DesignerEnrollment AccountMembership],
+          true_for: %w[TeacherEnrollment TaEnrollment AccountAdmin],
+        }
+      })
+
+      # Extend Course navigation
+      Course.prepend(PLUGIN_NAME_CAMEL::CourseExtension)
+
+      # Register System Hooks
+      Quizzes::Quiz.prepend(PLUGIN_NAME_CAMEL::QuizExtension)
+
+      # Register Controller Hooks
+      Quizzes::QuizzesController.prepend(PLUGIN_NAME_CAMEL::QuizzesControllerExtension)
+    end
+  end
+
+  module CourseExtension
+    def tabs_available(user = nil, opts = {})
+      tabs = super
+      if self.grants_right?(user, :view_PLUGIN_NAME_SNAKE_sample_page)
+        tabs << {
+          id: "PLUGIN_NAME_SNAKE_sample",
+          label: I18n.t("PLUGIN_NAME_HUMAN Sample"),
+          css_class: "PLUGIN_NAME_SNAKE_sample",
+          href: :course_PLUGIN_NAME_SNAKE_sample_path,
+          visibility: "members"
+        }.with_indifferent_access
+      end
+      tabs
+    end
+  end
+end
