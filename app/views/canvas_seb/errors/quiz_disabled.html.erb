@@ -6,15 +6,7 @@
       <%= @message %>
     </p>
 
-    <% if params[:debug] || Rails.env.development? %>
-      <div style="margin-top: 2em; text-align: left; background: #eee; padding: 10px; border-radius: 4px; font-family: monospace; font-size: 0.8em; overflow-x: auto;">
-        <strong>Debug Info:</strong><br/>
-        URL: <%= @current_url %><br/>
-        Course Key: <%= @course_key || 'None' %><br/>
-        Expected Hash: <%= @expected_hash %><br/>
-        Received Hash: <%= @client_seb_key.presence || 'None' %>
-      </div>
-    <% end %>
+
 
     <div style="margin-top: 2em;">
       <a href="/" class="btn btn-primary">
