@@ -62,25 +62,7 @@ if settings[:your_new_setting] == "some_value"
 end
 ```
 
-### 4. Modifying an Existing Setting
-If you are editing an existing setting, you must ensure that all references to the setting key are updated throughout the codebase.
-
-#### Find Usages
-Run the following command to find all occurrences of the setting key:
-```bash
-grep -r "your_setting_key" .
-```
-Or if using ripgrep:
-```bash
-rg "your_setting_key"
-```
-
-#### Update References
-- Check logic in `lib/` (extensions, engines).
-- Check views where the setting might be displayed or used.
-- Ensure the default value in `lib/canvas_seb/engine.rb` is still appropriate if you changed the type.
-
-### 5. Verify Changes
+### 4. Verify Changes
 1. Go to **Site Admin** > **Plugins**.
 2. Find **Canvas SEB** and click its name or settings icon.
 3. Verify the new field appears and saves correctly.
