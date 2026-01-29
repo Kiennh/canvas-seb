@@ -17,7 +17,8 @@ module CanvasSeb
         settings: {
           enabled: true,
           worker: "CanvasSeb::Worker",
-          disable_quiz_seb: false
+          disable_quiz_seb: false,
+          single_session: false
         }
       }
 
@@ -43,6 +44,10 @@ module CanvasSeb
 
       # Register Controller Hooks
       Quizzes::QuizzesController.prepend(CanvasSeb::QuizzesControllerExtension)
+      
+      # Single Session enforcement
+      ApplicationController.prepend(CanvasSeb::ApplicationControllerExtension)
+      PseudonymSessionsController.prepend(CanvasSeb::PseudonymSessionsControllerExtension)
     end
   end
 

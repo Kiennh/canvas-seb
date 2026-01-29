@@ -10,6 +10,7 @@ Site administrators can enable the plugin via the Canvas Plugin settings:
 2. Find **Canvas SEB** in the list.
 3. Check the **Enable Plugin** box.
 4. (Optional) Check **Disable Quiz SEB** to activate the global enforcement hook.
+5. (Optional) Check **Enforce Single Session** to restrict users to a single active browser session. If a user logs in on a new browser, they will be automatically logged out from any previous browsers.
 
 ![Plugin Settings](doc/images/plugin_settings.png)
 
@@ -46,6 +47,8 @@ The plugin is located in `gems/plugins/canvas_seb`. It is registered in the main
 - **`CanvasSeb::Engine`**: Handles plugin registration, sets up permissions, and applies Ruby `prepend` extensions to core Canvas classes.
 - **`CanvasSeb::QuizExtension`**: Intercepts `Quizzes::Quiz#generate_submission` to block quiz starts at the model level if SEB requirements aren't met.
 - **`CanvasSeb::QuizzesControllerExtension`**: Intercepts `Quizzes::QuizzesController#show` and `#start_quiz!` to capture request headers and perform redirects.
+- **`CanvasSeb::ApplicationControllerExtension`**: Applied to `ApplicationController` to verify if the current session is the "authorized" one by comparing it with a value in `Rails.cache`.
+- **`CanvasSeb::PseudonymSessionsControllerExtension`**: Applied to `PseudonymSessionsController#create` to update the "authorized" session ID in the cache upon successful login.
 
 ### Validation Mechanism
 The plugin uses a SHA256 HMAC-like validation:

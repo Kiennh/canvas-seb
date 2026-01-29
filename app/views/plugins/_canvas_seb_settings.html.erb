@@ -24,5 +24,12 @@
       <small><%= t(:disable_hint, "If checked, students can only start quizzes using Safe Exam Browser. Quizzes will be disabled on other browsers.") %></small>
     </td>
   </tr>
+  <tr>
+    <td><%= blabel :canvas_seb, :single_session, :en => "Enforce Single Session" %></td>
+    <td>
+      <%= f.check_box :single_session, :checked => Canvas::Plugin.value_to_boolean(settings[:single_session]) %>
+      <small><%= t(:single_session_hint, "When checked, only allow one active session per user. Logging in on a new browser will logout old sessions.") %></small>
+    </td>
+  </tr>
 </table>
 <% end %>
