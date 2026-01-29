@@ -1,0 +1,21 @@
+<div id="canvas_seb_sample_page" style="padding: 20px;">
+  <h1><%= t(:hello_user_title, "Hello %{user}, welcome to %{course}!", user: @username, course: @coursename) %></h1>
+  <p><%= t(:congratulations, "You are viewing a sample page added by the Canvas SEB plugin.") %></p>
+  <hr />
+  <p>
+    <%= t(:permission_info, "This page is only visible because you have the <strong>View Canvas SEB Config Page</strong> permission.") %>
+  </p>
+  <hr />
+  <h3><%= t(:course_settings_title, "Course Specific Settings") %></h3>
+  <%= form_with url: course_canvas_seb_save_settings_path(id: @context.id), method: :post, local: true do |f| %>
+    <div style="margin-bottom: 15px;">
+      <label for="course_quiz_key" style="display: block; margin-bottom: 5px;">
+        <%= t(:course_quiz_key_label, "Course Quiz Key (displayed on deny page):") %>
+      </label>
+      <input type="text" name="course_quiz_key" id="course_quiz_key" value="<%= @course_key %>" style="width: 300px;" placeholder="e.g. SECURE-KEY-123" />
+    </div>
+    <button type="submit" class="btn btn-primary">
+      <%= t(:save_key_button, "Save Course Key") %>
+    </button>
+  <% end %>
+</div>

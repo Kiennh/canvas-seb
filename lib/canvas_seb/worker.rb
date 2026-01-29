@@ -1,0 +1,21 @@
+module CanvasSeb
+  class Worker
+    attr_accessor :job_id
+
+    def initialize(job_id)
+      @job_id = job_id
+    end
+
+    def perform
+      # Background logic here
+      Rails.logger.info "[Canvas SEB Worker] Processing job #{@job_id}"
+      # Simulate work
+      sleep 2
+      Rails.logger.info "[Canvas SEB Worker] Completed job #{@job_id}"
+    end
+
+    def self.enqueue(id)
+      Delayed::Job.enqueue(new(id), priority: Delayed::LOW_PRIORITY)
+    end
+  end
+end
