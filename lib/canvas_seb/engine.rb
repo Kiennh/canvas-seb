@@ -15,7 +15,7 @@ module CanvasSeb
         settings: {
           enabled: true,
           worker: "CanvasSeb::Worker",
-          disable_quiz_start: false
+          disable_quiz_seb: false
         }
       }
 

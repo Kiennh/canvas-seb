@@ -22,7 +22,7 @@ module CanvasSeb
 
     def check_canvas_seb_quiz_disabled
       settings = Canvas::Plugin.find(:canvas_seb).settings || {}
-      enabled = Canvas::Plugin.value_to_boolean(settings[:disable_quiz_start])
+      enabled = Canvas::Plugin.value_to_boolean(settings[:disable_quiz_seb])
       
       if enabled && @quiz.present? && !can_preview?
         course_seb_key = @context.settings[:canvas_seb_quiz_key]

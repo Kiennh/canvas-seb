@@ -15,8 +15,8 @@ module CanvasSeb
       settings = Canvas::Plugin.find(:canvas_seb).settings || {}
       course_name = self.context.respond_to?(:name) ? self.context.name : "Unknown Course"
       
-      # Check if "Disable Quiz Start" (Enforce SEB) is enabled in settings
-      if Canvas::Plugin.value_to_boolean(settings[:disable_quiz_start]) && !preview
+      # Check if "Disable Quiz SEB" (Enforce SEB) is enabled in settings
+      if Canvas::Plugin.value_to_boolean(settings[:disable_quiz_seb]) && !preview
         # Check SEB Config Key if configured for the course
         course_seb_key = self.context.settings[:canvas_seb_quiz_key]
 

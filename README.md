@@ -9,7 +9,7 @@ Site administrators can enable the plugin via the Canvas Plugin settings:
 1. Navigate to **Site Admin** > **Plugins**.
 2. Find **Canvas SEB** in the list.
 3. Check the **Enable Plugin** box.
-4. (Optional) Check **Disable Quiz Start** to activate the global enforcement hook.
+4. (Optional) Check **Disable Quiz SEB** to activate the global enforcement hook.
 
 ![Plugin Settings](doc/images/plugin_settings.png)
 

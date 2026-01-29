@@ -18,10 +18,10 @@
     </td>
   </tr>
   <tr>
-    <td><%= blabel :canvas_seb, :disable_quiz_start, :en => "Disable Quiz Start (Hook Demo)" %></td>
+    <td><%= blabel :canvas_seb, :disable_quiz_seb, :en => "Disable Quiz SEB" %></td>
     <td>
-      <%= f.check_box :disable_quiz_start, :checked => Canvas::Plugin.value_to_boolean(settings[:disable_quiz_start]) %>
-      <small><%= t(:disable_hint, "If checked, the system hook will prevent students from starting any quiz.") %></small>
+      <%= f.check_box :disable_quiz_seb, :checked => Canvas::Plugin.value_to_boolean(settings[:disable_quiz_seb]) %>
+      <small><%= t(:disable_hint, "If checked, students can only start quizzes using Safe Exam Browser. Quizzes will be disabled on other browsers.") %></small>
     </td>
   </tr>
 </table>
