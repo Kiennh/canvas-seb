@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative "version"
+
 module CanvasSeb
   class Engine < ::Rails::Engine
     config.paths["lib"].eager_load!
@@ -10,7 +12,7 @@ module CanvasSeb
         name: -> { I18n.t(:canvas_seb_name, "Canvas SEB") },
         author: "Instructure",
         description: "Initializes CanvasSeb with GUI, API, Worker, and Course Navigation",
-        version: "1.0.0",
+        version: CanvasSeb::VERSION,
         settings_partial: "plugins/canvas_seb_settings",
         settings: {
           enabled: true,
