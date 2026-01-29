@@ -10,12 +10,12 @@
   <%= form_with url: course_canvas_seb_save_settings_path(id: @context.id), method: :post, local: true do |f| %>
     <div style="margin-bottom: 15px;">
       <label for="course_quiz_key" style="display: block; margin-bottom: 5px;">
-        <%= t(:course_quiz_key_label, "Course Quiz Key (displayed on deny page):") %>
+        <%= t(:course_quiz_key_label, "SEB Config key:") %>
       </label>
       <input type="text" name="course_quiz_key" id="course_quiz_key" value="<%= @course_key %>" style="width: 300px;" placeholder="e.g. SECURE-KEY-123" />
     </div>
     <button type="submit" class="btn btn-primary">
-      <%= t(:save_key_button, "Save Course Key") %>
+      <%= t(:save_key_button, "Save SEB Config key") %>
     </button>
   <% end %>
 </div>
