@@ -38,8 +38,6 @@ module CanvasSeb
 
         # We only need to inject if at least one restriction is active
         if hide_all_controls || disable_seek
-          Rails.logger.info "[Canvas SEB] Plugin enabled and restrictions active. Injecting customizations."
-          
           # Add SEB flags to JS ENV
           js_env(
             SEB_ENABLED: true,

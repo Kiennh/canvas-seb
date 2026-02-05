@@ -27,7 +27,12 @@ import { MediaPlayer } from '@instructure/ui-media-player'
  * inject the hideControls prop into MediaPlayer components when restricted.
  */
 
-console.log('[Canvas SEB] SEB Media Player module loaded')
+
+// Capture SEB settings immediately and freeze them to prevent end-user tampering via console
+const SEB_LOCKED_SETTINGS = Object.freeze({
+    hideAll: !!(window.ENV?.SEB_HIDE_ALL_MEDIA_CONTROLS),
+    disableSeek: !!(window.ENV?.SEB_DISABLE_MEDIA_SEEK)
+})
 
 // We attempt to hook both the global React and the imported one
 const reactHooks = [window.React, React].filter(r => r && r.createElement)
@@ -35,7 +40,6 @@ const reactHooks = [window.React, React].filter(r => r && r.createElement)
 reactHooks.forEach((R, index) => {
     try {
         const originalCreateElement = R.createElement
-        console.log(`[Canvas SEB] Patching React instance ${index}. Version:`, R.version)
 
         R.createElement = function (type, props, ...children) {
             if (!type) return originalCreateElement.apply(this, [type, props, ...children])
@@ -45,27 +49,31 @@ reactHooks.forEach((R, index) => {
 
             // 1. Handle "Hide All Controls" via the official hideControls prop on MediaPlayer
             if (name === 'MediaPlayer' || name === 'MediaPlayerComponent') {
-                if (window.ENV?.SEB_HIDE_ALL_MEDIA_CONTROLS) {
-                    console.log('[Canvas SEB] Injecting hideControls=true into MediaPlayer')
-                    const newProps = Object.assign({}, props, { hideControls: true })
+                if (SEB_LOCKED_SETTINGS.hideAll) {
+                    // Create a new props object and lock the hideControls property
+                    const newProps = Object.assign({}, props)
+                    Object.defineProperty(newProps, 'hideControls', {
+                        value: true,
+                        writable: false,
+                        configurable: false,
+                        enumerable: true
+                    })
                     return originalCreateElement.apply(this, [type, newProps, ...children])
                 }
             }
 
             // 2. Handle "Disable Seek" by hiding specific sub-components
-            if (window.ENV?.SEB_DISABLE_MEDIA_SEEK) {
+            if (SEB_LOCKED_SETTINGS.disableSeek) {
                 const seekRelatedNames = ['Timebar', 'Volume', 'PlayerSettings', 'FullScreenButton', 'CaptionsToggle']
                 if (seekRelatedNames.some(seekName => name.includes(seekName))) {
-                    console.log('[Canvas SEB] Hiding seek-related component:', name)
                     return null
                 }
             }
 
             return originalCreateElement.apply(this, [type, props, ...children])
         }
-        console.log(`[Canvas SEB] React instance ${index} successfully patched`)
     } catch (e) {
-        console.error(`[Canvas SEB] Failed to hook React instance ${index}:`, e)
+        // Silent
     }
 })
 
@@ -98,7 +106,6 @@ export function applySebMediaPlayerStyles() {
             if (!container.classList.contains(cssClass)) {
                 container.classList.add('seb-media-player')
                 container.classList.add(cssClass)
-                console.log('[Canvas SEB] Applied CSS class', cssClass, 'to media player container')
             }
         })
     }
