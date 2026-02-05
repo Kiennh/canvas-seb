@@ -10,7 +10,10 @@ Site administrators can enable the plugin via the Canvas Plugin settings:
 2. Find **Canvas SEB** in the list.
 3. Check the **Enable Plugin** box.
 4. (Optional) Check **Disable Quiz SEB** to activate the global enforcement hook.
-5. (Optional) Check **Enforce Single Session** to restrict users to a single active browser session. If a user logs in on a new browser, they will be automatically logged out from any previous browsers.
+5. (Optional) Check **Enforce Single Session** to restrict users to a single active browser session.
+6. (Optional) **Media Player Controls (SEB Only)**:
+    - Check **Disable Media Seek Controls** to hide the timeline/seek bar, volume, captions, settings, and fullscreen (only play/pause will be visible).
+    - Check **Hide All Media Controls** to remove all controls entirely.
 
 ![Plugin Settings](doc/images/plugin_settings.png)
 
