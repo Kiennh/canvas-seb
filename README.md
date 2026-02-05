@@ -39,6 +39,11 @@ If enforcement is active and a student attempts to start a quiz without the corr
 - They will be redirected to a "Quiz Disabled" page.
 - The page will display debug information (IP, User-Agent, and Hash status) to help troubleshoot why their SEB client was rejected.
 
+### 5. Media Player Restrictions
+When **Disable Media Seek Controls** or **Hide All Media Controls** is enabled, students will see a restricted player:
+
+![Media Player Demo](doc/images/media_player_demo.png)
+
 ---
 
 ## Developer Documentation
