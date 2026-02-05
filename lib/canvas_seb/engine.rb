@@ -18,10 +18,13 @@ module CanvasSeb
           enabled: true,
           worker: "CanvasSeb::Worker",
           disable_quiz_seb: false,
-          single_session: false
+          single_session: false,
+          disable_media_seek: false,
+          hide_all_media_controls: false
         }
       }
 
+=begin
       # Register granular permissions
       Permissions.register({
         view_canvas_seb_sample_page: {
@@ -35,6 +38,7 @@ module CanvasSeb
           true_for: %w[TeacherEnrollment TaEnrollment AccountAdmin],
         }
       })
+=end
 
       # Extend Course navigation
       Course.prepend(CanvasSeb::CourseExtension)
@@ -44,6 +48,7 @@ module CanvasSeb
 
       # Register Controller Hooks
       Quizzes::QuizzesController.prepend(CanvasSeb::QuizzesControllerExtension)
+      MediaObjectsController.include(CanvasSeb::MediaObjectsControllerExtension)
       
       # Single Session enforcement
       ApplicationController.prepend(CanvasSeb::ApplicationControllerExtension)

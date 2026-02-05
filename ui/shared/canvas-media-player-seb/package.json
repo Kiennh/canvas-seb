@@ -1,0 +1,8 @@
+{
+    "name": "@canvas/canvas-seb-media-player",
+    "version": "1.0.0",
+    "description": "Safe Exam Browser media player customization for Canvas LMS",
+    "main": "index.js",
+    "private": true,
+    "license": "AGPL-3.0"
+}

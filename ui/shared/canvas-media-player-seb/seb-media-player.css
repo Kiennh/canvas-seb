@@ -1,0 +1,50 @@
+/*
+ * Copyright (C) 2026 - present Instructure, Inc.
+ *
+ * This file is part of Canvas.
+ *
+ * Canvas is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License as published by the Free
+ * Software Foundation, version 3 of the License.
+ *
+ * Canvas is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Affero General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+/* 
+ * SEB Media Player Customization
+ * Provides two modes:
+ * 1. hide-all-controls: Hides the entire control bar
+ * 2. disable-seek: Hides all controls except play/pause button
+ */
+
+/* Mode 1: Hide all controls completely */
+.seb-media-player.hide-all-controls [class*="PlayerControls"] {
+  display: none !important;
+}
+
+/* Mode 2: Hide all controls except play/pause button */
+.seb-media-player.disable-seek [class*="PlayerControls__controls"] [class*="Timebar"] {
+  display: none !important;
+}
+
+.seb-media-player.disable-seek [class*="PlayerControls__controls"] [class*="Volume"] {
+  display: none !important;
+}
+
+.seb-media-player.disable-seek [class*="PlayerControls__controls"] [class*="CaptionsToggle"] {
+  display: none !important;
+}
+
+.seb-media-player.disable-seek [class*="PlayerControls__controls"] [class*="PlayerSettings"] {
+  display: none !important;
+}
+
+.seb-media-player.disable-seek [class*="PlayerControls__controls"] [class*="FullScreenButton"] {
+  display: none !important;
+}

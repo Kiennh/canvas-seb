@@ -31,5 +31,22 @@
       <small><%= t(:single_session_hint, "When checked, only allow one active session per user. Logging in on a new browser will logout old sessions.") %></small>
     </td>
   </tr>
+  <tr>
+    <td colspan="2"><hr/><strong><%= t(:media_player_controls, "Media Player Controls (SEB Only)") %></strong></td>
+  </tr>
+  <tr>
+    <td><%= blabel :canvas_seb, :disable_media_seek, :en => "Disable Media Seek Controls" %></td>
+    <td>
+      <%= f.check_box :disable_media_seek, :checked => Canvas::Plugin.value_to_boolean(settings[:disable_media_seek]) %>
+      <small><%= t(:disable_media_seek_hint, "Hide timeline/seek bar, volume, captions, settings, and fullscreen. Only show play/pause button.") %></small>
+    </td>
+  </tr>
+  <tr>
+    <td><%= blabel :canvas_seb, :hide_all_media_controls, :en => "Hide All Media Controls" %></td>
+    <td>
+      <%= f.check_box :hide_all_media_controls, :checked => Canvas::Plugin.value_to_boolean(settings[:hide_all_media_controls]) %>
+      <small><%= t(:hide_all_media_controls_hint, "Hide all media player controls completely (overrides 'Disable Media Seek Controls').") %></small>
+    </td>
+  </tr>
 </table>
 <% end %>
