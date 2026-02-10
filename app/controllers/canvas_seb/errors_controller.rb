@@ -11,5 +11,10 @@ module CanvasSeb
                    course: @course_name)
       render layout: 'application'
     end
+
+    def quit
+      @course_name = @context.respond_to?(:name) ? @context.name : "Unknown Course"
+      render layout: 'application'
+    end
   end
 end

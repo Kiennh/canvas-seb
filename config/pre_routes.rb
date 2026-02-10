@@ -13,4 +13,5 @@ CanvasRails::Application.routes.draw do
 
   # Error Pages
   get 'canvas_seb/quiz_disabled' => 'canvas_seb/errors#quiz_disabled', as: :canvas_seb_quiz_disabled
+  get 'canvas_seb/quit' => 'canvas_seb/errors#quit', as: :canvas_seb_quit
 end

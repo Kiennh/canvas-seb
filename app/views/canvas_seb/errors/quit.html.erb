@@ -1,0 +1,30 @@
+<div id="seb_quit_page" style="width: 700px; margin: 40px auto; text-align: center;">
+  <div class="ui-state-highlight ui-corner-all" style="padding: 2em; border-width: 2px;">
+    <i class="icon-info" style="font-size: 3em; display: block; margin-bottom: 0.5em;"></i>
+    <h2 style="color: #3a87ad; margin-top: 0;">Safe Exam Browser Exit</h2>
+    <p style="font-size: 1.05em; line-height: 1.5;">
+      This institution does not allow users to quit SEB from within the exam.
+    </p>
+    <p style="font-size: 0.95em; line-height: 1.5;">
+      Course: <strong><%= @course_name %></strong>
+    </p>
+
+    <div style="margin-top: 2em;">
+      <a href="/" class="btn btn-link">
+        <i class="icon-home"></i> <%= t(:go_back_home, "Go Back Home") %>
+      </a>
+    </div>
+  </div>
+</div>
+
+<style>
+  #seb_quit_page .ui-state-highlight {
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+    color: #3a87ad;
+  }
+  #seb_quit_page .btn-link {
+    color: #0088cc;
+    text-decoration: none;
+  }
+</style>
