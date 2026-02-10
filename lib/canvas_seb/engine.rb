@@ -24,21 +24,35 @@ module CanvasSeb
         }
       }
 
-=begin
-      # Register granular permissions
-      Permissions.register({
-        view_canvas_seb_sample_page: {
-          label: -> { I18n.t("Permissions - View Canvas SEB Config Page") },
-          available_to: %w[StudentEnrollment TeacherEnrollment TaEnrollment DesignerEnrollment AccountMembership],
-          true_for: %w[TeacherEnrollment TaEnrollment AccountAdmin],
-        },
-        manage_canvas_seb_course_settings: {
-          label: -> { I18n.t("Permissions - Manage Canvas SEB Course Settings") },
-          available_to: %w[TeacherEnrollment TaEnrollment DesignerEnrollment AccountMembership],
-          true_for: %w[TeacherEnrollment TaEnrollment AccountAdmin],
-        }
-      })
-=end
+
+
+    end
+
+    initializer "canvas_seb.register_permissions" do
+      Rails.logger.info "[CanvasSEB] Registering permissions..."
+      require "permissions"
+      
+      begin
+        Permissions.register({
+          view_canvas_seb_sample_page: {
+            label: -> { I18n.t("Permissions - View Canvas SEB Config Page") },
+            available_to: %w[StudentEnrollment TeacherEnrollment TaEnrollment DesignerEnrollment AccountMembership],
+            true_for: %w[TeacherEnrollment TaEnrollment AccountAdmin],
+          },
+          manage_canvas_seb_course_settings: {
+            label: -> { I18n.t("Permissions - Manage Canvas SEB Course Settings") },
+            available_to: %w[TeacherEnrollment TaEnrollment DesignerEnrollment AccountMembership],
+            true_for: %w[TeacherEnrollment TaEnrollment AccountAdmin],
+          }
+        })
+        Rails.logger.info "[CanvasSEB] Permissions registered successfully."
+      rescue => e
+        Rails.logger.error "[CanvasSEB] Failed to register permissions: #{e.message}"
+      end
+    end
+
+    config.to_prepare do
+
 
       # Extend Course navigation
       Course.prepend(CanvasSeb::CourseExtension)
