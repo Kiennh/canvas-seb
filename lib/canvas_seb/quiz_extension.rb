@@ -38,9 +38,8 @@ module CanvasSeb
             raise "This quiz requires Safe Exam Browser with the correct configuration. (Mismatch detected)"
           end
         else
-          # Fallback: Validation enabled but no keys set -> Block all
-          Rails.logger.info "[Canvas SEB] Preventing quiz start (No SEB keys configured) for user #{user.id} in course '#{course_name}'"
-          raise "Quizzes are currently disabled by the Canvas SEB plugin for course '#{course_name}'."
+          # Validation enabled but no keys set -> Continue as normal
+          Rails.logger.info "[Canvas SEB] Allowing quiz start (No SEB keys configured) for user #{user.id} in course '#{course_name}'"
         end
       end
 
