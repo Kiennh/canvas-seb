@@ -1,9 +1,10 @@
 <div id="canvas_seb_sample_page" style="padding: 20px;">
   <h1><%= t(:hello_user_title, "Hello %{user}, welcome to %{course}!", user: @username, course: @coursename) %></h1>
-  <p><%= t(:congratulations, "You are viewing a sample page added by the Canvas SEB plugin.") %></p>
-  <hr />
   <p>
-    <%= t(:permission_info, "This page is only visible because you have the <strong>View Canvas SEB Config Page</strong> permission.") %>
+    <%= sanitize(
+      t(:permission_info, "This page is only visible because you have the <strong>View Canvas SEB Config Page</strong> permission."),
+      tags: %w[strong]
+    ) %>
   </p>
   <hr />
   <h3><%= t(:course_settings_title, "Course Specific Settings") %></h3>
